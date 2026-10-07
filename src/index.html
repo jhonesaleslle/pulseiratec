@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Pulseiras</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="marca"><span class="icone">◉</span> Pulseiras</div>
+  <nav>
+    <button data-aba="imprimir" class="ativa">Imprimir</button>
+    <button data-aba="cadastro">Cadastro</button>
+    <button data-aba="modelos">Modelos</button>
+    <button data-aba="config">Configurações</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ IMPRIMIR ============ -->
+  <section id="aba-imprimir" class="aba ativa">
+    <div class="lateral">
+      <label>Modelo de pulseira<select id="imp-modelo"></select></label>
+      <label>Buscar no cadastro
+        <input id="imp-busca" placeholder="Nome, prontuário ou documento…" autocomplete="off">
+      </label>
+      <div id="imp-sugestoes" class="sugestoes"></div>
+      <div class="linha-botoes">
+        <button id="imp-limpar" class="sec">Limpar campos</button>
+        <button id="imp-salvar-cad" class="sec">Salvar no cadastro</button>
+      </div>
+      <div id="imp-campos" class="campos"></div>
+    </div>
+    <div class="centro">
+      <div class="cartao">
+        <h3>Prévia <small id="imp-tamanho"></small></h3>
+        <div id="imp-previa" class="previa"></div>
+        <h3>Como sai na impressora (vertical)</h3>
+        <div id="imp-previa-v" class="previa-v"></div>
+      </div>
+      <div class="cartao barra-imprimir">
+        <label>Cópias <input id="imp-copias" type="number" min="1" max="50" value="1"></label>
+        <span id="imp-impressora" class="dica"></span>
+        <span class="espaco"></span>
+        <button id="imp-pdf" class="sec">Salvar PDF</button>
+        <button id="imp-imprimir" class="pri grande">🖨 Imprimir pulseira</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CADASTRO ============ -->
+  <section id="aba-cadastro" class="aba">
+    <div class="barra">
+      <button id="cad-novo" class="pri">+ Novo cadastro</button>
+      <input id="cad-busca" placeholder="Buscar…" class="busca">
+      <span class="espaco"></span>
+      <button id="cad-importar" class="sec">Importar CSV</button>
+      <button id="cad-exportar" class="sec">Exportar CSV</button>
+    </div>
+    <div class="tabela-wrap">
+      <table id="cad-tabela">
+        <thead><tr>
+          <th><input type="checkbox" id="cad-todos"></th>
+          <th>Foto</th><th>Nome</th><th>Nascimento</th><th>Prontuário / Nº</th><th>Setor / Leito</th><th>Categoria</th><th></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+      <p id="cad-vazio" class="vazio">Nenhum cadastro ainda. Clique em <b>+ Novo cadastro</b> ou importe uma planilha CSV.</p>
+    </div>
+    <div class="barra rodape">
+      <span id="cad-contagem" class="dica"></span>
+      <span class="espaco"></span>
+      <label class="inline">Modelo <select id="cad-modelo"></select></label>
+      <label class="inline">Cópias <input id="cad-copias" type="number" min="1" max="20" value="1" style="width:60px"></label>
+      <button id="cad-imprimir-sel" class="pri">🖨 Imprimir selecionados</button>
+    </div>
+  </section>
+
+  <!-- ============ MODELOS ============ -->
+  <section id="aba-modelos" class="aba">
+    <div class="lista-modelos">
+      <div class="linha-botoes">
+        <button id="mod-novo" class="pri">+ Novo</button>
+        <button id="mod-duplicar" class="sec">Duplicar</button>
+      </div>
+      <ul id="mod-lista"></ul>
+      <div class="linha-botoes">
+        <button id="mod-importar" class="sec">Importar</button>
+        <button id="mod-exportar" class="sec">Exportar</button>
+      </div>
+      <button id="mod-excluir" class="perigo">Excluir modelo</button>
+    </div>
+    <div class="editor">
+      <div class="ferramentas">
+        <span class="rot">Inserir:</span>
+        <button data-add="texto">T Texto</button>
+        <button data-add="campo">{ } Campo</button>
+        <button data-add="logo">★ Logo</button>
+        <button data-add="imagem">🖼 Imagem</button>
+        <button data-add="foto">👤 Foto</button>
+        <button data-add="retangulo">▭ Retângulo</button>
+        <button data-add="elipse">◯ Elipse</button>
+        <button data-add="linha">― Linha</button>
+        <button data-add="barcode">||| Cód. barras</button>
+        <button data-add="qrcode">▦ QR Code</button>
+        <span class="espaco"></span>
+        <button id="ed-zoom-menos" class="sec">−</button>
+        <span id="ed-zoom" class="dica">100%</span>
+        <button id="ed-zoom-mais" class="sec">+</button>
+        <button id="ed-zoom-ajustar" class="sec">Ajustar</button>
+      </div>
+      <div id="ed-palco" class="palco"><div id="ed-escala" class="escala"></div></div>
+      <div class="cartao">
+        <h3>Como sai na impressora (vertical)</h3>
+        <div id="ed-previa-v" class="previa-v"></div>
+      </div>
+      <p class="dica">Arraste para mover · alça no canto para redimensionar · setas movem 0,5 mm (Shift = 5 mm) · Delete exclui · Ctrl+D duplica. Áreas listradas = fecho/ponta da pulseira (normalmente não imprimem).</p>
+    </div>
+    <aside id="ed-props" class="props"></aside>
+  </section>
+
+  <!-- ============ CONFIG ============ -->
+  <section id="aba-config" class="aba">
+    <div class="config">
+      <div class="cartao">
+        <h3>Instituição / Evento</h3>
+        <label>Nome (campo {instituicao})<input id="cfg-instituicao"></label>
+        <label>Logomarca (campo Logo dos modelos)</label>
+        <div class="logo-box">
+          <div id="cfg-logo-previa" class="logo-previa">sem logo</div>
+          <div class="col">
+            <button id="cfg-logo-escolher" class="sec">Escolher imagem…</button>
+            <button id="cfg-logo-remover" class="sec">Remover</button>
+          </div>
+        </div>
+      </div>
+      <div class="cartao">
+        <h3>Impressora</h3>
+        <label>Impressora de pulseiras
+          <div class="inline-row"><select id="cfg-impressora"></select><button id="cfg-atualizar-imp" class="sec">Atualizar</button></div>
+        </label>
+        <label class="check"><input type="checkbox" id="cfg-dialogo"> Mostrar a janela de impressão do Windows antes de imprimir</label>
+        <label class="check"><input type="checkbox" id="cfg-papel-driver"> Usar o tamanho de papel configurado no driver (em vez do tamanho do modelo)</label>
+        <div class="grid2">
+          <label>Ajuste horizontal (mm)<input id="cfg-offx" type="number" step="0.5"></label>
+          <label>Ajuste vertical (mm)<input id="cfg-offy" type="number" step="0.5"></label>
+        </div>
+        <p class="dica">Use os ajustes se a impressão sair deslocada. No driver da impressora (Zebra, Argox, Elgin, Honeywell…) configure o mesmo tamanho de mídia do modelo e o tipo "térmica direta".</p>
+      </div>
+      <div class="cartao">
+        <h3>Nomes dos campos extras</h3>
+        <div class="grid2">
+          <label>Campo {extra1}<input id="cfg-extra1"></label>
+          <label>Campo {extra2}<input id="cfg-extra2"></label>
+        </div>
+      </div>
+      <div class="cartao">
+        <h3>Backup</h3>
+        <p class="dica">Os dados ficam em: <code id="cfg-pasta"></code></p>
+        <div class="linha-botoes">
+          <button id="cfg-backup" class="sec">Exportar backup completo</button>
+          <button id="cfg-restaurar" class="sec">Restaurar backup</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Modal de cadastro -->
+<div id="modal" class="modal oculto">
+  <div class="janela">
+    <h2 id="modal-titulo">Cadastro</h2>
+    <div class="modal-corpo">
+      <div class="foto-col">
+        <div id="modal-foto" class="foto-grande">sem foto</div>
+        <button id="modal-foto-escolher" class="sec">Escolher foto…</button>
+        <button id="modal-foto-remover" class="sec">Remover foto</button>
+      </div>
+      <div id="modal-campos" class="campos grid2"></div>
+    </div>
+    <div class="linha-botoes fim">
+      <button id="modal-cancelar" class="sec">Cancelar</button>
+      <button id="modal-salvar-imprimir" class="sec">Salvar e imprimir</button>
+      <button id="modal-salvar" class="pri">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<input type="file" id="arquivo-img" accept="image/*" hidden>
+
+<script src="vendor/JsBarcode.all.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="render.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

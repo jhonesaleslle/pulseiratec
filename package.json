@@ -1,0 +1,37 @@
+{
+  "name": "pulseiras",
+  "productName": "Pulseiras",
+  "version": "1.0.0",
+  "description": "Cria, salva e imprime pulseiras de identificacao (clinicas, hospitais e eventos) em impressoras de pulseira.",
+  "main": "src/main.js",
+  "author": "Tecnovetti",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable --x64"
+  },
+  "build": {
+    "appId": "br.com.tecnovetti.pulseiras",
+    "productName": "Pulseiras",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.png"
+    },
+    "portable": {
+      "artifactName": "Pulseiras.exe"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  },
+  "devDependencies": {
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3",
+    "jsbarcode": "3.11.6",
+    "qrcode-generator": "1.4.4"
+  }
+}
